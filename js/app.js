@@ -3,6 +3,7 @@ const carrito = document.querySelector('#carrito')
 const contenedorCarrito = document.querySelector('#lista-carrito tbody')
 const vaciarCarritoBtn = document.querySelector('#vaciar-carrito')
 const listaCursos = document.querySelector('#lista-cursos')
+let cursosCarrito = []
 
 cargarEventListener()
 function cargarEventListener() {
@@ -30,5 +31,34 @@ function leerDatosCurso(curso) {
     cantidad: 1
   }
 
-  console.log(infoCurso);
+
+  // Agregamos los cursos al arreglo de cursos
+  cursosCarrito = [...cursosCarrito, infoCurso]
+  carritoHTML()
+}
+
+
+// Muestra los cursos agregados al carrito de cmpras en el HTML
+function carritoHTML() {
+  // Limpiar el HTML
+  limpiarHTML()
+
+  // Recorre el carrito  y genera el HTML
+  cursosCarrito.forEach( curso => {
+    const row = document.createElement('tr')
+    row.innerHTML = `
+      <td>
+        ${curso.nombre}
+      </td>
+    `
+    // Agrega el HTML del carrito en el tbody
+    contenedorCarrito.appendChild(row)
+  })
+}
+
+// Elimina los cursos del tbody
+function limpiarHTML() {
+  while(contenedorCarrito.firstChild) {
+    contenedorCarrito.removeChild(contenedorCarrito.firstChild)
+  }
 }
